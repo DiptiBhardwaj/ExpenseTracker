@@ -44,7 +44,7 @@ const HomePage = () => {
           <CardMedia
               component="img"
               height="450"
-              image="homePageImg.jpg"
+              image="ExpenseTracker/homePageImg.jpg"
               alt="Expense Traccker"
             />
 

@@ -91,6 +91,7 @@ const App =() => {
           </RequireAuth>
         }
       />
+      <Route path="*" element={<HomePage />} />
     </Routes>
   </AuthProvider>
   )
