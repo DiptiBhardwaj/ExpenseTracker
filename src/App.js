@@ -71,7 +71,7 @@ const App =() => {
   const dispatch = useDispatch();
     useEffect(()=> {
       axios
-      .get("http://localhost:3000/expensesData.json")
+      .get("https://diptibhardwaj.github.io/ExpenseTracker/expensesData.json")
       .then((resp) => dispatch({
         type: "SET_EXPENSES", 
         payload: resp.data}))
