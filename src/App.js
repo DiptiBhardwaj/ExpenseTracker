@@ -66,12 +66,9 @@ const reducerMethod = (state = {
 }
 const store = createStore(reducerMethod);
 function RequireAuth({ children }) {
-  console.log("RequireAuth>>>");
   const isUserAuthenticated= useSelector(state=>state.isUserAuthenticated)
   const { authed } = useAuth();
   const location = useLocation();
-  console.log("isUserAuthenticated>>>",isUserAuthenticated, authed);
-
   return isUserAuthenticated === true || authed === true ? (
     children
   ) : (
