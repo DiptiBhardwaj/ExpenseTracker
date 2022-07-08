@@ -1,15 +1,13 @@
 import React from "react";
 import ExpenseList from './ExpenseList';
-import AddEditModal from './modals/AddEditModal';
 import {useDispatch} from "react-redux";
 import {Button, Grid, Box} from '@mui/material';
 import {HomeOutlined, Add} from '@mui/icons-material';
-import { Link, useNavigate} from "react-router-dom";
+import { Link} from "react-router-dom";
 import "../App.css";
 
 const Profile =() => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   let onButtonClick = () => {
       dispatch({
         type: 'SET_SHOW_MODAL',
