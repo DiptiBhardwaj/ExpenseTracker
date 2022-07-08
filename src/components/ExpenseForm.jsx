@@ -1,13 +1,15 @@
 import React from 'react';
+import api from "../api/expenses";
 import { useState } from 'react';
 import { Box, Button, Input} from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 
 function ExpenseForm({onClose}) {
   const [inputs, setInputs] = useState({});
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 
   const expenses = useSelector(state=> state.expenses);
   const editExpenseID = useSelector(state=> state.editExpenseID);
@@ -28,11 +30,34 @@ function ExpenseForm({onClose}) {
         id: editExpenseID? expense.id: uuidv4(),
         ...inputs
     };
-    dispatch({
-        type: editExpenseID? 'EDIT_EXPENSE': 'ADD_EXPENSE',
-        payload: updated_expense,
+    if(!editExpenseID){ // Add new Record
+      api.post('/expenses', updated_expense, {
+          headers: {
+            'Content-Type':'application/json'
+          }
+      })
+      .then(res => {
+        dispatch({
+            type: 'ADD_EXPENSE',
+            payload: res.data,
+        });
+      })
+    }
+    else { // Edit/Update existing Record
+      api.put(`/expenses/${updated_expense.id}`, updated_expense, {
+        headers: {
+          'Content-Type':'application/json'
+        }
+    })
+    .then(res => {
+      dispatch({
+          type: 'EDIT_EXPENSE',
+          payload: res.data,
+      });
     });
+    }
     onClose();
+    navigate(`/profile`, { replace: true });
   }
 
   return (

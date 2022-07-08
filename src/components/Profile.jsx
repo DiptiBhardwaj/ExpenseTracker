@@ -4,12 +4,12 @@ import AddEditModal from './modals/AddEditModal';
 import {useDispatch} from "react-redux";
 import {Button, Grid, Box} from '@mui/material';
 import {HomeOutlined, Add} from '@mui/icons-material';
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "../App.css";
 
 const Profile =() => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   let onButtonClick = () => {
       dispatch({
         type: 'SET_SHOW_MODAL',
@@ -25,6 +25,7 @@ const Profile =() => {
       type: 'SET_EDIT_EXPENSE_ID',
       payload: null,
     });
+    return navigate(`/profile`, { replace: true });
   }
 
   return (
@@ -38,7 +39,8 @@ const Profile =() => {
       </Grid>
       <div className='App'>
         <h1>Expense Tracker</h1>
-        <Button variant="contained" color="primary" onClick={onButtonClick}><Add/>Add Expense</Button>
+        <Link to="/add"><Button variant="contained" color="primary" onClick={onButtonClick}><Add/>Add Expense</Button></Link>
+        {/* <Button variant="contained" color="primary" onClick={onButtonClick}><Add/>Add Expense</Button> */}
         <ExpenseList />
         <AddEditModal onClose={()=>onModalClose()} />
       </div>

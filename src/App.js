@@ -1,11 +1,13 @@
 import React, {useEffect} from "react";
-import axios from "axios";
+import api from "./api/expenses";
 import {createStore} from "redux";
-import {Provider, useDispatch} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/Home";
 import ProfilePage from './pages/ProfilePage';
+import AddEditModal from './components/modals/AddEditModal';
+
 import { useLocation, Navigate} from "react-router-dom";
 import {useAuth, AuthProvider} from "./hooks/useAuth";
 import "./App.css";
@@ -14,7 +16,8 @@ const reducerMethod = (state = {
   budget: "",
   expenses: [],
   showModal: false,
-  editExpenseID: null
+  editExpenseID: null,
+  isUserAuthenticated: false
 }, action) => {
   switch(action.type){
       case("SET_EXPENSES"):
@@ -51,16 +54,22 @@ const reducerMethod = (state = {
 				expenses: state.expenses.filter(
 					(expense) => expense.id !== action.payload
 				),
-			};
+      };
+      case("SET_USER_AUTHENTICATED"):
+      return {
+        ...state,
+        isUserAuthenticated: action.payload
+      }
       default: 
       return state;
   }
 }
 const store = createStore(reducerMethod);
 function RequireAuth({ children }) {
+  const isUserAuthenticated= useSelector(state=>state.isUserAuthenticated)
   const { authed } = useAuth();
   const location = useLocation();
-  return authed === true ? (
+  return isUserAuthenticated === true ? (
     children
   ) : (
     <Navigate to="/login" replace state={{ path: location.pathname }} />
@@ -70,8 +79,7 @@ function RequireAuth({ children }) {
 const App =() => {
   const dispatch = useDispatch();
     useEffect(()=> {
-      axios
-      .get("https://diptibhardwaj.github.io/ExpenseTracker/expensesData.json")
+      api.get("/expenses")
       .then((resp) => dispatch({
         type: "SET_EXPENSES", 
         payload: resp.data}))
@@ -91,7 +99,23 @@ const App =() => {
           </RequireAuth>
         }
       />
-      <Route path="*" element={<HomePage />} />
+      <Route exact path="/ExpenseTracker" element={<Navigate replace to="/" />}></Route>
+      {/* <Route path="*" element={<HomePage />} /> */}
+      <Route exact path="/add" element={ 
+        <RequireAuth>
+          <AddEditModal onClose={()=>dispatch({
+              type: 'SET_SHOW_MODAL',
+              payload: false,
+          })} />
+          </RequireAuth>}/>
+        <Route exact path="/edit" element={ 
+          <RequireAuth>
+            <AddEditModal onClose={()=>dispatch({
+                type: 'SET_SHOW_MODAL',
+                payload: false,
+            })} />
+            </RequireAuth>}/>
+
     </Routes>
   </AuthProvider>
   )

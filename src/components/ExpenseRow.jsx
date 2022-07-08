@@ -1,22 +1,25 @@
-import {React} from 'react'
+import {React} from 'react';
+import api from "../api/expenses";
 import {TableCell, TableRow, Button} from '@mui/material';
 import {useDispatch} from "react-redux";
+import { Link} from "react-router-dom";
 import {EditOutlined, DeleteOutlined} from '@mui/icons-material';
 
 const ExpenseRow = ({expense}) => {
     const dispatch = useDispatch();
     let handleEditExpense = (e) => {
-        e.stopPropagation();
+        // e.stopPropagation();
         dispatch({
           type: 'SET_SHOW_MODAL',
           payload: true,
-      });
+         });
         dispatch({
           type: 'SET_EDIT_EXPENSE_ID',
           payload: expense.id,
       });
     }
     const handleDeleteExpense = () => {
+      api.delete(`/expenses/${expense.id}`)
       dispatch({
         type: 'DELETE_EXPENSE',
         payload: expense.id,
@@ -33,7 +36,8 @@ const ExpenseRow = ({expense}) => {
               <TableCell align="right">Rs. {expense.amount}</TableCell>
               <TableCell align="right">{expense.date}</TableCell>
               <TableCell align="right">
-                  <Button variant="outlined" size="small" color="secondary" onClick={handleEditExpense}><EditOutlined />Edit Expense</Button> 
+              <Link to="/edit"> <Button variant="outlined" size="small" color="secondary" onClick={handleEditExpense}><EditOutlined />Edit Expense</Button></Link>
+                  {/* <Button variant="outlined" size="small" color="secondary" onClick={handleEditExpense}><EditOutlined />Edit Expense</Button>  */}
                 </TableCell>
               <TableCell align="right">
                   <Button variant="outlined" size="small" color="secondary" onClick={handleDeleteExpense}><DeleteOutlined />Delete Expense</Button>         

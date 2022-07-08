@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Box, Typography } from '@mui/material';
 import {useSelector} from "react-redux";
 import ExpenseForm from '../ExpenseForm';
+import { useNavigate } from "react-router-dom";
 
 const style = {
     position: 'absolute',
@@ -18,14 +19,18 @@ const style = {
 const AddEditModal = ({onClose})=>{
     let showModal = useSelector(state=> state.showModal);
     const editExpenseID = useSelector(state=> state.editExpenseID);
-
+    const navigate = useNavigate();
     if (!showModal) {
         return null;
+    }
+    const handleCloseModal = ()=>{
+        onClose()
+        navigate(`/profile`, { replace: true });
     }
     return (
         <Modal
             open={showModal}
-            onClose={onClose}
+            onClose={handleCloseModal}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             >
@@ -33,7 +38,7 @@ const AddEditModal = ({onClose})=>{
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                 {editExpenseID? 'EDIT': 'Add New'} Expense
                 </Typography>
-                <ExpenseForm onClose={()=>onClose()}/>
+                <ExpenseForm onClose={handleCloseModal}/>
             </Box>
         </Modal>
     );

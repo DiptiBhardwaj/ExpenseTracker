@@ -57,7 +57,6 @@ const ExpenseList = () => {
                         <TableCell align="right">DATE</TableCell>
                         <TableCell align="right">EDIT</TableCell>
                         <TableCell align="right">DELETE</TableCell>
-
                     </TableRow>
                 </TableHead>
                 <TableBody>

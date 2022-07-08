@@ -44,8 +44,8 @@ const HomePage = () => {
           <CardMedia
               component="img"
               height="450"
-              image="ExpenseTracker/homePageImg.jpg"
-              alt="Expense Traccker"
+              image={window.location.hostname === "localhost"? "ExpenseTracker/homePageImg.jpg":"homePageImg.jpg"}
+              alt="Expense Tracker"
             />
 
           <CardContent>
