@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Box, Typography } from '@mui/material';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import ExpenseForm from '../ExpenseForm';
 import { useNavigate } from "react-router-dom";
 
@@ -16,15 +16,24 @@ const style = {
     p: 4,
 };
 
-const AddEditModal = ({onClose})=>{
+const AddEditModal = ()=>{
+    const dispatch = useDispatch();
     let showModal = useSelector(state=> state.showModal);
     const editExpenseID = useSelector(state=> state.editExpenseID);
     const navigate = useNavigate();
     if (!showModal) {
-        return null;
+        return navigate(`/profile`, { replace: true });
     }
     const handleCloseModal = ()=>{
-        onClose()
+        dispatch({
+            type: 'SET_SHOW_MODAL',
+            payload: false,
+        });
+        dispatch({
+          type: 'SET_EDIT_EXPENSE_ID',
+          payload: null,
+        });
+        // onClose()
         navigate(`/profile`, { replace: true });
     }
     return (

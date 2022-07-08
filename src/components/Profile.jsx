@@ -16,17 +16,6 @@ const Profile =() => {
         payload: true,
     });
   }
-  let onModalClose = () => {
-     dispatch({
-        type: 'SET_SHOW_MODAL',
-        payload: false,
-    });
-    dispatch({
-      type: 'SET_EDIT_EXPENSE_ID',
-      payload: null,
-    });
-    return navigate(`/profile`, { replace: true });
-  }
 
   return (
     <>
@@ -42,7 +31,6 @@ const Profile =() => {
         <Link to="/add"><Button variant="contained" color="primary" onClick={onButtonClick}><Add/>Add Expense</Button></Link>
         {/* <Button variant="contained" color="primary" onClick={onButtonClick}><Add/>Add Expense</Button> */}
         <ExpenseList />
-        <AddEditModal onClose={()=>onModalClose()} />
       </div>
     </>
   )

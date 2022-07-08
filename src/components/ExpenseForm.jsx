@@ -26,11 +26,11 @@ function ExpenseForm({onClose}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-      const updated_expense = {
-        id: editExpenseID? expense.id: uuidv4(),
-        ...inputs
-    };
     if(!editExpenseID){ // Add new Record
+      const updated_expense = {
+        id: uuidv4(),
+        ...inputs
+      };
       api.post('/expenses', updated_expense, {
           headers: {
             'Content-Type':'application/json'
@@ -44,6 +44,7 @@ function ExpenseForm({onClose}) {
       })
     }
     else { // Edit/Update existing Record
+      const updated_expense = {...expense, ...inputs};
       api.put(`/expenses/${updated_expense.id}`, updated_expense, {
         headers: {
           'Content-Type':'application/json'

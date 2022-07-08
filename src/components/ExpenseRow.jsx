@@ -16,10 +16,10 @@ const ExpenseRow = ({expense}) => {
         dispatch({
           type: 'SET_EDIT_EXPENSE_ID',
           payload: expense.id,
-      });
+        });
     }
     const handleDeleteExpense = () => {
-      api.delete(`/expenses/${expense.id}`)
+      api.delete(`/expenses/${expense.id}`);
       dispatch({
         type: 'DELETE_EXPENSE',
         payload: expense.id,

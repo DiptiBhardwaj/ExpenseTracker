@@ -66,10 +66,13 @@ const reducerMethod = (state = {
 }
 const store = createStore(reducerMethod);
 function RequireAuth({ children }) {
+  console.log("RequireAuth>>>");
   const isUserAuthenticated= useSelector(state=>state.isUserAuthenticated)
   const { authed } = useAuth();
   const location = useLocation();
-  return isUserAuthenticated === true ? (
+  console.log("isUserAuthenticated>>>",isUserAuthenticated, authed);
+
+  return isUserAuthenticated === true || authed === true ? (
     children
   ) : (
     <Navigate to="/login" replace state={{ path: location.pathname }} />
@@ -89,7 +92,7 @@ const App =() => {
   return (
   <AuthProvider>
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/ExpenseTracker" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route
         path="/profile"
@@ -99,23 +102,16 @@ const App =() => {
           </RequireAuth>
         }
       />
-      <Route exact path="/ExpenseTracker" element={<Navigate replace to="/" />}></Route>
+      <Route exact path="/" element={<Navigate replace to="/ExpenseTracker" />}></Route>
       {/* <Route path="*" element={<HomePage />} /> */}
       <Route exact path="/add" element={ 
         <RequireAuth>
-          <AddEditModal onClose={()=>dispatch({
-              type: 'SET_SHOW_MODAL',
-              payload: false,
-          })} />
+          <AddEditModal/>
           </RequireAuth>}/>
         <Route exact path="/edit" element={ 
-          <RequireAuth>
-            <AddEditModal onClose={()=>dispatch({
-                type: 'SET_SHOW_MODAL',
-                payload: false,
-            })} />
-            </RequireAuth>}/>
-
+        <RequireAuth>
+          <AddEditModal/>
+          </RequireAuth>}/>
     </Routes>
   </AuthProvider>
   )

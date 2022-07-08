@@ -20,9 +20,9 @@ export const AuthProvider = ({ children }) => {
       type: 'SET_USER_AUTHENTICATED',
       payload: true,
     });
-    navigate(`${location.state.path}`, { replace: true });
+    // navigate(`${location.state.path}`, { replace: true });
 
-    // navigate("/profile", { replace: true });
+    navigate("/profile", { replace: true });
   };
 
   const logout = () => {
