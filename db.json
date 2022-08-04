@@ -1,0 +1,34 @@
+{
+  "expenses": [
+    {
+      "id": "393900b9-e0f5-46bb-9cfa-056f98785632",
+      "title": "Shopping",
+      "amount": "5000",
+      "date": "2010-01-07"
+    },
+    {
+      "id": "3ce131c4-fc86-4aa7-a61c-dc6c86a582c1",
+      "title": "Dinning",
+      "amount": "1500",
+      "date": "2022-07-01"
+    },
+    {
+      "id": "de3254a9-101d-4abc-846b-239dfaa998e4",
+      "title": "Tour",
+      "amount": "8000",
+      "date": "2022-07-08"
+    },
+    {
+      "id": "5c98049c-6b61-4c65-ab69-0d777adc8969",
+      "title": "Grocery",
+      "amount": "3500",
+      "date": "2017-11-08"
+    },
+    {
+      "id": "1c5bf2fc-4080-4840-ac96-f3df5ea4922f",
+      "title": "Orana",
+      "amount": "2000",
+      "date": "2022-07-07"
+    }
+  ]
+}
